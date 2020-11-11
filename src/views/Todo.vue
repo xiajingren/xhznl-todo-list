@@ -93,7 +93,10 @@ export default {
       }
 
       this.todoList.push({ content: "" });
-      this.editIndex = this.todoList.length - 1;
+      const index = this.todoList.length - 1;
+      this.tempItem = Object.assign({}, this.todoList[index]);
+      this.editIndex = index;
+      //this.editing(index);
     },
     editing(index) {
       setTimeout(() => {
@@ -118,11 +121,9 @@ export default {
     },
     cancel(index) {
       this.$set(this.todoList, index, this.tempItem);
-      this.editIndex = -1;
+      this.edited();
     },
     clear(index) {
-      //this.todoList.splice(index, 1);
-      //this.edited();
       this.$set(this.todoList, index, { content: "" });
     },
     done(event, index) {
