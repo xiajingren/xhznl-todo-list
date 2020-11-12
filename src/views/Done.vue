@@ -1,18 +1,18 @@
 <template>
   <div class="root">
-    <div class="list" v-for="group in doneGroupList" :key="group.date">
-      <div class="group">{{ group.date }}</div>
-      <div
-        class="item"
-        v-for="(done, index) in group.doneList"
-        :key="done.centent"
-      >
+    <div class="list" v-for="(value, key) in doneGroupList" :key="key">
+      <div class="group">{{ getDateStr(key) }}</div>
+      <div class="item" v-for="(done, index) in value" :key="done.id">
         <p>{{ index + 1 }}.{{ done.content }}</p>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { ipcRenderer } from "electron";
+import DB from "@/utils/db";
+import { getDateStr } from "@/utils/common";
+
 export default {
   name: "Done",
   data() {
@@ -21,21 +21,19 @@ export default {
     };
   },
   methods: {
+    getDateStr,
     getDoneList() {
-      this.doneGroupList = [];
-      for (let i = 0; i < 5; i++) {
-        let group = { date: "today" + i, doneList: [] };
-        for (let j = 0; j < 10; j++) {
-          group.doneList.push({
-            content: "This is an Done page This is an Done page" + i + j,
-          });
-        }
-        this.doneGroupList.push(group);
-      }
+      const list = DB.groupby("doneList", "done_date");
+      console.log(list);
+      this.doneGroupList = list;
     },
   },
   created() {
-    this.getDoneList();
+    ipcRenderer.invoke("getDataPath").then((storePath) => {
+      DB.initDB(storePath);
+
+      this.getDoneList();
+    });
   },
 };
 </script>

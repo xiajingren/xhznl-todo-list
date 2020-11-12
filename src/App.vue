@@ -21,9 +21,9 @@
     </div>
     <div class="main scrollbar scrollbar-y">
       <transition name="fade-transform" mode="out-in">
-        <keep-alive>
-          <router-view />
-        </keep-alive>
+        <!-- <keep-alive> -->
+        <router-view />
+        <!-- </keep-alive> -->
       </transition>
     </div>
   </div>

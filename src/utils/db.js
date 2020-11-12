@@ -47,6 +47,16 @@ const DB = {
       .removeById(id)
       .write();
   },
+  groupby(key, prop) {
+    const d = db
+      .read()
+      .get(key)
+      .sortBy(prop)
+      .reverse()
+      .groupBy(prop)
+      .value();
+    return d;
+  },
 };
 
 export default DB;
