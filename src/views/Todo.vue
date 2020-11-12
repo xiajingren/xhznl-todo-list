@@ -90,6 +90,7 @@ export default {
     add() {
       if (this.editIndex !== -1) {
         this.edited();
+        return;
       }
 
       this.todoList.push({

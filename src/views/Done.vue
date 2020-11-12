@@ -11,7 +11,7 @@
 <script>
 import { ipcRenderer } from "electron";
 import DB from "@/utils/db";
-import { getDateStr } from "@/utils/common";
+import { getDateStr, getNowDate, getNowDateTime } from "@/utils/common";
 
 export default {
   name: "Done",
@@ -24,8 +24,19 @@ export default {
     getDateStr,
     getDoneList() {
       const list = DB.groupby("doneList", "done_date");
-      if (list.length === 0) {
-        //todo:
+      if (Object.keys(list).length === 0) {
+        this.doneGroupList = {};
+        this.doneGroupList[getNowDate()] = [
+          {
+            done_date: getNowDate(),
+            done_datetime: getNowDateTime(),
+            todo_date: getNowDate(),
+            todo_datetime: getNowDateTime(),
+            content: "快乐",
+            id: "9e3b08c5-c870-4aeb-a2a5-8a039db21ace",
+          },
+        ];
+        return;
       }
       this.doneGroupList = list;
     },
@@ -55,7 +66,7 @@ export default {
       line-height: 180px;
       box-sizing: border-box;
       color: rgba($color: #cccccc, $alpha: 0.8);
-      font-size: 50px;
+      font-size: 35px;
       text-align: center;
       user-select: none;
     }
