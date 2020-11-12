@@ -24,7 +24,9 @@ export default {
     getDateStr,
     getDoneList() {
       const list = DB.groupby("doneList", "done_date");
-      console.log(list);
+      if (list.length === 0) {
+        //todo:
+      }
       this.doneGroupList = list;
     },
   },
