@@ -36,7 +36,10 @@
 </template>
 <script>
 import draggable from "vuedraggable";
-import CursorSpecialEffects from "../utils/fireworks";
+import CursorSpecialEffects from "@/utils/fireworks";
+import { ipcRenderer } from "electron";
+import DB from "@/utils/db";
+import { getNowDate, getNowDateTime } from "@/utils/common";
 
 export default {
   name: "Todo",
@@ -54,45 +57,46 @@ export default {
   },
   methods: {
     getTodoList() {
-      this.todoList = [
-        {
-          content: "This is an Todo page",
-        },
-        {
-          content: "This is an Todo page",
-        },
-        {
-          content: "This is an Todo page",
-        },
-        {
-          content: "This is an Todo page",
-        },
-        {
-          content: "This is an Todo page",
-        },
-        {
-          content: "This is an Todo page",
-        },
-        {
-          content: "This is an Todo page",
-        },
-        {
-          content: "This is an Todo page",
-        },
-        {
-          content: "This is an Todo page This is an Todo page",
-        },
-        {
-          content: "This is an Todo page",
-        },
-      ];
+      const list = DB.get("todoList");
+
+      if (list.length === 0) {
+        this.todoList = [
+          {
+            todo_date: getNowDate(),
+            todo_datetime: getNowDateTime(),
+            content: "“单击”下方空处，创建一个Todo",
+          },
+          {
+            todo_date: getNowDate(),
+            todo_datetime: getNowDateTime(),
+            content: "“双击”Todo，表示已完成",
+          },
+          {
+            todo_date: getNowDate(),
+            todo_datetime: getNowDateTime(),
+            content: "“单击”Todo，可进行更改或删除",
+          },
+          {
+            todo_date: getNowDate(),
+            todo_datetime: getNowDateTime(),
+            content: "“愿你快乐每一天”:)",
+          },
+        ];
+        return;
+      }
+
+      this.todoList = list;
     },
     add() {
       if (this.editIndex !== -1) {
         this.edited();
       }
 
-      this.todoList.push({ content: "" });
+      this.todoList.push({
+        todo_date: getNowDate(),
+        todo_datetime: getNowDateTime(),
+        content: "",
+      });
       const index = this.todoList.length - 1;
       this.tempItem = Object.assign({}, this.todoList[index]);
       this.editIndex = index;
@@ -118,13 +122,20 @@ export default {
         return p.content;
       });
       this.editIndex = -1;
+
+      DB.set("todoList", this.todoList);
     },
     cancel(index) {
       this.$set(this.todoList, index, this.tempItem);
       this.edited();
     },
     clear(index) {
-      this.$set(this.todoList, index, { content: "" });
+      if (!this.todoList[index].content) {
+        this.edited();
+        return;
+      }
+
+      this.todoList[index].content = "";
     },
     done(event, index) {
       if (this.editIndex !== -1) {
@@ -136,8 +147,17 @@ export default {
         this.dblclick = false;
       }, 500);
 
-      console.log(index);
       CursorSpecialEffects.handleMouseDown(event);
+
+      DB.insert(
+        "doneList",
+        Object.assign(
+          { done_date: getNowDate(), done_datetime: getNowDateTime() },
+          this.todoList[index]
+        )
+      );
+      this.todoList.splice(index, 1);
+      DB.set("todoList", this.todoList);
     },
   },
   computed: {
@@ -151,7 +171,11 @@ export default {
     },
   },
   created() {
-    this.getTodoList();
+    ipcRenderer.invoke("getDataPath").then((storePath) => {
+      DB.initDB(storePath);
+
+      this.getTodoList();
+    });
   },
   directives: {
     focus: {
@@ -180,6 +204,7 @@ export default {
         overflow: hidden;
         cursor: pointer;
         user-select: none;
+        line-height: 28px;
       }
       .edit {
         display: flex;
@@ -193,6 +218,7 @@ export default {
           border: none;
           background: transparent;
           font-size: 16px;
+          line-height: 28px;
         }
         i {
           line-height: 28px;

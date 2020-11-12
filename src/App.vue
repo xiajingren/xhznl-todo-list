@@ -5,11 +5,26 @@
       <i>Powered by 小黑</i>
     </div>
     <div class="nav">
-      <router-link draggable="false" to="/">Todo</router-link> |
-      <router-link draggable="false" to="/done">Done</router-link>
+      <div class="link">
+        <router-link draggable="false" to="/">Todo</router-link> |
+        <router-link draggable="false" to="/done">Done</router-link>
+      </div>
+      <div class="tools">
+        <transition-group name="fade" mode="out-in">
+          <i
+            class="iconfont icon-download"
+            v-if="$route.path === '/done'"
+            key="export"
+          ></i>
+        </transition-group>
+      </div>
     </div>
     <div class="main scrollbar scrollbar-y">
-      <router-view />
+      <transition name="fade-transform" mode="out-in">
+        <keep-alive>
+          <router-view />
+        </keep-alive>
+      </transition>
     </div>
   </div>
 </template>
@@ -50,25 +65,39 @@ export default {
     }
   }
   .nav {
+    display: flex;
+    justify-content: space-between;
+    height: 26px;
     padding: 0 20px;
     color: #cccccc;
     user-select: none;
-    a {
-      font-weight: bold;
-      color: #cccccc;
-      text-decoration: none;
-      &.router-link-exact-active {
-        font-size: 20px;
-        color: #ffffff;
+    .link {
+      a {
+        font-weight: bold;
+        color: #cccccc;
+        text-decoration: none;
+        &.router-link-exact-active {
+          font-size: 20px;
+          color: #ffffff;
+        }
+      }
+      a:hover {
+        color: rgba($color: #ffffff, $alpha: 0.6);
       }
     }
-    a:hover {
-      color: rgba($color: #ffffff, $alpha: 0.6);
+    .tools {
+      display: flex;
+      i {
+        font-size: 20px;
+        line-height: 26px;
+        padding: 0 5px;
+        cursor: pointer;
+      }
     }
   }
   .main {
     flex: 1;
-    margin-top: 10px;
+    margin: 10px 0;
     overflow-y: auto;
   }
   .main:hover::-webkit-scrollbar-thumb {

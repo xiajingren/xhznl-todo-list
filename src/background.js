@@ -5,6 +5,8 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 //import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
 
+import '@/utils/backgroundExtra'
+
 import pkg from "../package.json";
 
 // Scheme must be registered before the app is ready
@@ -16,7 +18,7 @@ async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 320,
-    height: 280,
+    height: 290,
     type: "toolbar",
     frame: false,
     title: pkg.name,
