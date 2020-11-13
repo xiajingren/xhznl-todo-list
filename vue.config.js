@@ -19,16 +19,11 @@ module.exports = {
           allowToChangeInstallationDirectory: true,
           shortcutName: "xhznl-todo-list",
         },
-        // publish: [
-        //   {
-        //     provider: "generic",
-        //     url: "",
-        //   },
-        // ],
+        publish: ["github"],
         // releaseInfo: {
         //   releaseName: "",
-        //   releaseNotes: "新版本",
-        //   releaseDate: "2020/11/10",
+        //   releaseNotes: "",
+        //   releaseDate: "",
         // },
       },
       nodeIntegration: true,

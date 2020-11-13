@@ -7,6 +7,8 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 
 import { initExtra, createTray } from "@/utils/backgroundExtra";
 
+import { autoUpdater } from "electron-updater";
+
 import pkg from "../package.json";
 
 let win;
@@ -60,6 +62,7 @@ async function createWindow() {
     createProtocol("app");
     // Load the index.html when not in development
     win.loadURL("app://./index.html");
+    autoUpdater.checkForUpdatesAndNotify();
   }
 
   win.on("closed", () => {

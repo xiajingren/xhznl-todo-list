@@ -1,6 +1,6 @@
 {
   "name": "xhznl-todo-list",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "author": "xhznl",
   "description": "a todo list application",
@@ -17,6 +17,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "dayjs": "^1.9.6",
+    "electron-updater": "^4.3.5",
     "fs-extra": "^9.0.1",
     "lodash-id": "^0.14.0",
     "lowdb": "^1.0.0",
