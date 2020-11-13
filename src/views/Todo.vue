@@ -79,7 +79,17 @@ export default {
           {
             todo_date: getNowDate(),
             todo_datetime: getNowDateTime(),
-            content: "“愿你快乐每一天”:)",
+            content: "“长按”Todo，可进行拖动排序",
+          },
+          {
+            todo_date: getNowDate(),
+            todo_datetime: getNowDateTime(),
+            content: "【重要】给爱的人一个温暖的拥抱",
+          },
+          {
+            todo_date: getNowDate(),
+            todo_datetime: getNowDateTime(),
+            content: "【重要】给自己一个鼓励的拥抱",
           },
         ];
         return;

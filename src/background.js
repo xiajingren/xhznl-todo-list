@@ -5,9 +5,21 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 //import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-import '@/utils/backgroundExtra'
+import { initExtra, createTray } from "@/utils/backgroundExtra";
 
 import pkg from "../package.json";
+
+let win;
+
+if (app.requestSingleInstanceLock()) {
+  app.on("second-instance", (event, commandLine, workingDirectory) => {
+    if (win) {
+      setPosition();
+    }
+  });
+} else {
+  app.quit();
+}
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -16,7 +28,7 @@ protocol.registerSchemesAsPrivileged([
 
 async function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 320,
     height: 290,
     type: "toolbar",
@@ -26,7 +38,7 @@ async function createWindow() {
     minimizable: false,
     maximizable: false,
     skipTaskbar: true,
-    closable: false,
+    //closable: false,
     //show: false,
     transparent: true,
     alwaysOnTop: true,
@@ -38,10 +50,7 @@ async function createWindow() {
     },
   });
 
-  const size = screen.getPrimaryDisplay().workAreaSize;
-  const winSize = win.getSize();
-
-  win.setPosition(size.width - winSize[0], 0);
+  setPosition();
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -52,6 +61,10 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL("app://./index.html");
   }
+
+  win.on("closed", () => {
+    win = null;
+  });
 }
 
 // Quit when all windows are closed.
@@ -66,7 +79,7 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  if (BrowserWindow.getAllWindows().length === 0) init();
 });
 
 // This method will be called when Electron has finished
@@ -81,8 +94,15 @@ app.on("ready", async () => {
   //     console.error("Vue Devtools failed to install:", e.toString());
   //   }
   // }
-  createWindow();
+
+  init();
 });
+
+function init() {
+  createWindow();
+  initExtra();
+  createTray(setPosition);
+}
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
@@ -97,4 +117,10 @@ if (isDevelopment) {
       app.quit();
     });
   }
+}
+
+function setPosition() {
+  const size = screen.getPrimaryDisplay().workAreaSize;
+  const winSize = win.getSize();
+  win.setPosition(size.width - winSize[0] - 30, 30);
 }

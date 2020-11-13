@@ -32,8 +32,8 @@ export default {
             done_datetime: getNowDateTime(),
             todo_date: getNowDate(),
             todo_datetime: getNowDateTime(),
-            content: "快乐",
-            id: "9e3b08c5-c870-4aeb-a2a5-8a039db21ace",
+            content: "告诉自己：All is well :)",
+            id: "37e4c3de-6d02-5a40-b4db-069f115c9be0",
           },
         ];
         return;
