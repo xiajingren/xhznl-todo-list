@@ -1,5 +1,15 @@
 # xhznl-todo-list
 
+:sparkles:一个使用electron + vue + electron-builder开发的跨平台 todo-list 桌面应用
+
+## 功能预览
+
+![image1](/resources/1.png)
+![image1](/resources/2.png)
+![image1](/resources/3.png)
+![image1](/resources/4.png)
+![image1](/resources/5.png)
+
 ## Project setup
 ```
 npm install
@@ -20,5 +30,12 @@ npm run electron:build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Roadmap
+
+- [x] todo/done 基本功能
+- [x] 软件自动更新
+- [ ] done list 数据导出
+- [ ] 开机启动
+- [ ] 窗口贴边自动收起
+- [ ] ......
+
