@@ -1,4 +1,4 @@
-import { app, ipcMain, Tray, Menu } from "electron";
+import { app, ipcMain, Tray, Menu, shell, dialog } from "electron";
 import DB from "./db";
 import path from "path";
 
@@ -24,14 +24,33 @@ export function createTray(setPosition) {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: "联系作者",
-      click: () => {},
+      label: "关于",
+      role: "abort",
+      click() {
+        dialog.showMessageBox({
+          title: pkg.name,
+          message: pkg.description,
+          detail: `Version: ${pkg.version}\nAuthor: ${pkg.author}\nGithub: https://github.com/xiajingren/xhznl-todo-list`,
+        });
+      },
+    },
+    {
+      label: "项目地址",
+      click: () => {
+        shell.openExternal("https://github.com/xiajingren/xhznl-todo-list");
+      },
+    },
+    {
+      label: "问题反馈",
+      click: () => {
+        shell.openExternal(
+          "https://github.com/xiajingren/xhznl-todo-list/issues"
+        );
+      },
     },
     {
       label: "退出",
-      click: () => {
-        app.quit();
-      },
+      role: "quit",
     },
   ]);
   tray.setContextMenu(contextMenu);
