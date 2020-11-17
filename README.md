@@ -4,27 +4,18 @@
 
 ## 功能预览
 
-![image1](/resources/5.png)
-![image1](/resources/1.png)
-![image1](/resources/2.png)
-![image1](/resources/3.png)
-![image1](/resources/4.png)
+![1.png](/resources/1.png)
+![2.png](/resources/2.png)
+![3.png](/resources/3.png)
+![4.gif](/resources/4.gif)
 
 ## 步骤
 
 ```
 npm install
-```
-
-### 开发
-
-```
 npm run electron:serve
-```
 
-### 打包
-
-```
+//打包
 npm run electron:build
 ```
 
