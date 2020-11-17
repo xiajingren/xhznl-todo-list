@@ -1,6 +1,6 @@
 "use strict";
 
-import { app, protocol, BrowserWindow, screen } from "electron";
+import { app, protocol, BrowserWindow, screen, ipcMain } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 //import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -127,3 +127,8 @@ function setPosition() {
   const winSize = win.getSize();
   win.setPosition(size.width - winSize[0] - 30, 30);
 }
+
+ipcMain.handle("setIgnoreMouseEvents", (event, ignore) => {
+  if (ignore) win.setIgnoreMouseEvents(true, { forward: true });
+  else win.setIgnoreMouseEvents(false);
+});

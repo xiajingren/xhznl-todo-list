@@ -25,5 +25,6 @@ npm run electron:build
 - [x] 软件自动更新
 - [ ] done list 数据导出
 - [x] 开机启动
+- [x] 鼠标穿透
 - [ ] 窗口贴边自动收起
 - [ ] ......

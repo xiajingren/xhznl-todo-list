@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ unfocused: ignoreMouse }">
+    <div class="mask"></div>
     <div class="drag-nav">
       <b>{{ appName }}</b>
       <i>Powered by 小黑</i>
@@ -12,9 +13,16 @@
       <div class="tools">
         <transition-group name="fade" mode="out-in">
           <i
-            class="iconfont icon-download"
+            class="iconfont icon-export"
             v-if="$route.path === '/done'"
             key="export"
+          ></i>
+          <i
+            :class="['iconfont', ignoreMouse ? 'icon-lock' : 'icon-unlock']"
+            key="lock"
+            @mouseenter="setIgnoreMouseEvents(false)"
+            @mouseleave="setIgnoreMouseEvents(ignoreMouse)"
+            @click="ignoreMouse = !ignoreMouse"
           ></i>
         </transition-group>
       </div>
@@ -32,11 +40,19 @@
 <script>
 import pkg from "../package.json";
 
+import { ipcRenderer } from "electron";
+
 export default {
   data() {
     return {
       appName: pkg.name,
+      ignoreMouse: false,
     };
+  },
+  methods: {
+    setIgnoreMouseEvents(ignore) {
+      ipcRenderer.invoke("setIgnoreMouseEvents", ignore);
+    },
   },
 };
 </script>
@@ -49,6 +65,13 @@ export default {
   height: 100%;
   background-color: rgba($color: #000000, $alpha: 0.6);
   border-radius: 5px;
+  .mask {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+  }
   .drag-nav {
     -webkit-app-region: drag;
     display: flex;
@@ -80,9 +103,9 @@ export default {
           font-size: 20px;
           color: #ffffff;
         }
-      }
-      a:hover {
-        color: rgba($color: #ffffff, $alpha: 0.6);
+        &:hover {
+          color: rgba($color: #ffffff, $alpha: 0.6);
+        }
       }
     }
     .tools {
@@ -99,9 +122,18 @@ export default {
     flex: 1;
     margin: 10px 0;
     overflow-y: auto;
+    &:hover::-webkit-scrollbar-thumb {
+      display: block;
+    }
   }
-  .main:hover::-webkit-scrollbar-thumb {
+}
+#app.unfocused {
+  opacity: 0.8;
+  .mask {
     display: block;
+  }
+  .tools {
+    z-index: 1000;
   }
 }
 </style>

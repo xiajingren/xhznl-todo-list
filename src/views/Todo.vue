@@ -26,7 +26,7 @@
               @keyup.13="edited"
               spellcheck="false"
             />
-            <i class="iconfont icon-seleted" @click.stop="edited"></i>
+            <i class="iconfont icon-select" @click.stop="edited"></i>
             <i class="iconfont icon-close" @click.stop="clear(index)"></i>
           </div>
         </div>

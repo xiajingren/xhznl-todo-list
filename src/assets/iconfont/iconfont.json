@@ -6,53 +6,74 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "11488001",
+      "icon_id": "15838424",
+      "name": "add",
+      "font_class": "add",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "15838432",
+      "name": "browse",
+      "font_class": "browse",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "15838434",
+      "name": "back",
+      "font_class": "back",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "15838444",
       "name": "close",
       "font_class": "close",
-      "unicode": "e747",
-      "unicode_decimal": 59207
+      "unicode": "e668",
+      "unicode_decimal": 58984
     },
     {
-      "icon_id": "11488030",
-      "name": "download",
-      "font_class": "download",
-      "unicode": "e74d",
-      "unicode_decimal": 59213
+      "icon_id": "15838468",
+      "name": "export",
+      "font_class": "export",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
     },
     {
-      "icon_id": "11488077",
-      "name": "move",
-      "font_class": "move",
-      "unicode": "e759",
-      "unicode_decimal": 59225
+      "icon_id": "15838471",
+      "name": "eye-close",
+      "font_class": "eye-close",
+      "unicode": "e66f",
+      "unicode_decimal": 58991
     },
     {
-      "icon_id": "11488112",
-      "name": "return",
-      "font_class": "return",
-      "unicode": "e75f",
-      "unicode_decimal": 59231
+      "icon_id": "15838514",
+      "name": "minus",
+      "font_class": "minus",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
     },
     {
-      "icon_id": "11488125",
-      "name": "seleted",
-      "font_class": "seleted",
-      "unicode": "e763",
-      "unicode_decimal": 59235
+      "icon_id": "15838530",
+      "name": "select",
+      "font_class": "select",
+      "unicode": "e67e",
+      "unicode_decimal": 59006
     },
     {
-      "icon_id": "12011574",
-      "name": "add-select",
-      "font_class": "add-select",
-      "unicode": "e7b0",
-      "unicode_decimal": 59312
+      "icon_id": "15838497",
+      "name": "lock",
+      "font_class": "lock",
+      "unicode": "e676",
+      "unicode_decimal": 58998
     },
     {
-      "icon_id": "12011622",
-      "name": "sami-select",
-      "font_class": "sami-select",
-      "unicode": "e7b1",
-      "unicode_decimal": 59313
+      "icon_id": "15838546",
+      "name": "unlock",
+      "font_class": "unlock",
+      "unicode": "e682",
+      "unicode_decimal": 59010
     }
   ]
 }
