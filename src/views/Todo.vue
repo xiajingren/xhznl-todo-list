@@ -86,11 +86,6 @@ export default {
             todo_datetime: getNowDateTime(),
             content: "【重要】给爱的人一个温暖的拥抱",
           },
-          {
-            todo_date: getNowDate(),
-            todo_datetime: getNowDateTime(),
-            content: "【重要】给自己一个鼓励的拥抱",
-          },
         ];
         return;
       }

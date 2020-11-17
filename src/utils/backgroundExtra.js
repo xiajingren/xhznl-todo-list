@@ -17,6 +17,12 @@ ipcMain.handle("getDataPath", (event) => {
 export function initExtra() {
   const storePath = getDataPath();
   DB.initDB(storePath);
+
+  const firstRun = DB.get("settings.firstRun");
+  if (firstRun) {
+    setOpenAtLogin(true);
+    DB.set("settings.firstRun", false);
+  }
 }
 
 export function createTray(setPosition) {
@@ -24,14 +30,12 @@ export function createTray(setPosition) {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: "关于",
-      role: "abort",
+      label: "开机自启动",
+      type: "checkbox",
+      checked: getOpenAtLogin(),
       click() {
-        dialog.showMessageBox({
-          title: pkg.name,
-          message: pkg.description,
-          detail: `Version: ${pkg.version}\nAuthor: ${pkg.author}\nGithub: https://github.com/xiajingren/xhznl-todo-list`,
-        });
+        const openAtLogin = getOpenAtLogin();
+        setOpenAtLogin(!openAtLogin);
       },
     },
     {
@@ -49,6 +53,17 @@ export function createTray(setPosition) {
       },
     },
     {
+      label: "关于",
+      role: "abort",
+      click() {
+        dialog.showMessageBox({
+          title: pkg.name,
+          message: pkg.description,
+          detail: `Version: ${pkg.version}\nAuthor: ${pkg.author}\nGithub: https://github.com/xiajingren/xhznl-todo-list`,
+        });
+      },
+    },
+    {
       label: "退出",
       role: "quit",
     },
@@ -60,4 +75,32 @@ export function createTray(setPosition) {
   tray.on("click", (event, bounds, position) => {
     setPosition();
   });
+}
+
+function setOpenAtLogin(openAtLogin) {
+  if (app.isPackaged) {
+    app.setLoginItemSettings({
+      openAtLogin: openAtLogin,
+    });
+  } else {
+    app.setLoginItemSettings({
+      openAtLogin: openAtLogin,
+      openAsHidden: false,
+      path: process.execPath,
+      args: [path.resolve(process.argv[1])],
+    });
+  }
+}
+
+function getOpenAtLogin() {
+  if (app.isPackaged) {
+    const { openAtLogin } = app.getLoginItemSettings();
+    return openAtLogin;
+  } else {
+    const { openAtLogin } = app.getLoginItemSettings({
+      path: process.execPath,
+      args: [path.resolve(process.argv[1])],
+    });
+    return openAtLogin;
+  }
 }

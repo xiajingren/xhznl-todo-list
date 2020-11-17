@@ -4,6 +4,8 @@ import FileSync from "lowdb/adapters/FileSync";
 import path from "path";
 import fs from "fs-extra";
 
+const isDevelopment = process.env.NODE_ENV !== "production";
+
 let db;
 
 const DB = {
@@ -12,15 +14,30 @@ const DB = {
       fs.mkdirpSync(storePath);
     }
 
-    const adapter = new FileSync(path.join(storePath, "/data.json"));
+    const dbFile = isDevelopment ? "/data-dev.json" : "/data.json";
+
+    const adapter = new FileSync(path.join(storePath, dbFile));
 
     db = Datastore(adapter);
 
     db._.mixin(LodashId);
 
-    db.defaults({ todoList: [], doneList: [], settings: {} }).write();
-  },
+    db.defaults({
+      todoList: [],
+      doneList: [],
+      settings: {},
+    }).write();
 
+    if (!this.has("settings.firstRun")) {
+      this.set("settings.firstRun", true);
+    }
+  },
+  has(key) {
+    return db
+      .read()
+      .has(key)
+      .value();
+  },
   get(key) {
     return db
       .read()
