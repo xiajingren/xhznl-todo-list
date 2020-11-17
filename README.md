@@ -10,35 +10,29 @@
 ![image1](/resources/3.png)
 ![image1](/resources/4.png)
 
-## Project setup
+## 步骤
 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 开发
 
 ```
 npm run electron:serve
 ```
 
-### Compiles and minifies for production
+### 打包
 
 ```
 npm run electron:build
 ```
 
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-## Roadmap
+## 规划
 
 - [x] todo/done 基本功能
 - [x] 软件自动更新
 - [ ] done list 数据导出
-- [ ] 开机启动
+- [x] 开机启动
 - [ ] 窗口贴边自动收起
 - [ ] ......
