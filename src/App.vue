@@ -12,11 +12,7 @@
       </div>
       <div class="tools">
         <transition-group name="fade" mode="out-in">
-          <i
-            class="iconfont icon-export"
-            v-if="$route.path === '/done'"
-            key="export"
-          ></i>
+          <i class="iconfont icon-export" key="export" @click="exportData"></i>
           <i
             :class="['iconfont', ignoreMouse ? 'icon-lock' : 'icon-unlock']"
             key="lock"
@@ -52,6 +48,9 @@ export default {
   methods: {
     setIgnoreMouseEvents(ignore) {
       ipcRenderer.invoke("setIgnoreMouseEvents", ignore);
+    },
+    exportData() {
+      ipcRenderer.invoke("exportData");
     },
   },
 };

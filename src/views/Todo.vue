@@ -58,7 +58,6 @@ export default {
   methods: {
     getTodoList() {
       const list = DB.get("todoList");
-
       if (list.length === 0) {
         this.todoList = [
           {
@@ -84,12 +83,11 @@ export default {
           {
             todo_date: getNowDate(),
             todo_datetime: getNowDateTime(),
-            content: "【重要】给爱的人一个温暖的拥抱",
+            content: "【重要】点一个star",
           },
         ];
         return;
       }
-
       this.todoList = list;
     },
     add() {

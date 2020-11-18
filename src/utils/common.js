@@ -8,6 +8,10 @@ export function getNowDateTime() {
   return dayjs().format("YYYY/MM/DD HH:mm:ss");
 }
 
+export function getNowDateTimeForFlieName() {
+  return dayjs().format("YYYYMMDDHHmmss");
+}
+
 export function getDateStr(date) {
   const d = dayjs(date);
   if (d.isSame(dayjs(), "day")) {
