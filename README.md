@@ -21,7 +21,7 @@ todo list：
 done list：
 ![2.png](/resources/2.png)
 基本操作：
-![3.png](/resources/3.gif)
+![3.gif](/resources/3.gif)
 数据导出：
 ![4.gif](/resources/4.gif)
 鼠标穿透：
