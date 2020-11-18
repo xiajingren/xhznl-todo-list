@@ -44,6 +44,8 @@ npm run electron:serve
 npm run electron:build
 ```
 
+下载 releases：https://github.com/xiajingren/xhznl-todo-list/releases
+
 ## 规划
 
 - [x] todo/done 基本功能
