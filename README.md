@@ -5,13 +5,21 @@
 ## 相关技术
 
 [electron 9.x](https://github.com/electron/electron)
+
 [vue 2.x](https://github.com/vuejs/vue)
+
 [vue-cli-plugin-electron-builder](https://github.com/nklayman/vue-cli-plugin-electron-builder)
+
 [electron-builder](https://github.com/electron-userland/electron-builder)
+
 [lowdb](https://github.com/typicode/lowdb)
+
 [exceljs](https://github.com/exceljs/exceljs)
+
 [dayjs](https://github.com/iamkun/dayjs)
+
 [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable)
+
 ......
 
 ## 功能预览
