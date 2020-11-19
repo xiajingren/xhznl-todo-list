@@ -13,6 +13,8 @@
       <div class="tools">
         <transition-group name="fade" mode="out-in">
           <i class="iconfont icon-export" key="export" @click="exportData"></i>
+          <i class="iconfont icon-eye-close" key="hide" @click="hideWindow"></i>
+
           <i
             :class="['iconfont', ignoreMouse ? 'icon-lock' : 'icon-unlock']"
             key="lock"
@@ -51,6 +53,9 @@ export default {
     },
     exportData() {
       ipcRenderer.invoke("exportData");
+    },
+    hideWindow() {
+      ipcRenderer.invoke("hideWindow");
     },
   },
 };

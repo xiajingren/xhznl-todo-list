@@ -33,10 +33,12 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 320,
     height: 290,
+    minWidth: 320,
+    minHeight: 290,
     type: "toolbar",
     frame: false,
     title: pkg.name,
-    resizable: false,
+    //resizable: false,
     minimizable: false,
     maximizable: false,
     skipTaskbar: true,
@@ -65,10 +67,17 @@ async function createWindow() {
     autoUpdater.checkForUpdatesAndNotify();
   }
 
+  // win.once("ready-to-show", () => {
+  //   win.show();
+  // });
+
   win.on("closed", () => {
     win = null;
   });
 }
+
+//闪烁问题
+app.commandLine.appendSwitch("wm-window-animations-disabled");
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
@@ -104,7 +113,7 @@ app.on("ready", async () => {
 function init() {
   createWindow();
   initExtra();
-  createTray(setPosition);
+  createTray(showWindow);
 }
 
 // Exit cleanly on request from parent process in development mode.
@@ -128,7 +137,15 @@ function setPosition() {
   win.setPosition(size.width - winSize[0] - 30, 30);
 }
 
+function showWindow() {
+  if (!win.isVisible()) win.show();
+}
+
 ipcMain.handle("setIgnoreMouseEvents", (event, ignore) => {
   if (ignore) win.setIgnoreMouseEvents(true, { forward: true });
   else win.setIgnoreMouseEvents(false);
+});
+
+ipcMain.handle("hideWindow", (event) => {
+  win.hide();
 });

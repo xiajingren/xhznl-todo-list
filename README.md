@@ -1,6 +1,6 @@
 # xhznl-todo-list
 
-:sparkles:一个使用 electron + vue + electron-builder 开发的跨平台 todo-list 桌面应用
+:sparkles:一个使用 electron + vue + electron-builder 开发的跨平台 todolist（便签）桌面应用
 
 ## 相关技术
 
