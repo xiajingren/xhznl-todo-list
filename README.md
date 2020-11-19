@@ -24,16 +24,17 @@
 
 ## 功能预览
 
-todo list：
-![1.png](/resources/1.png)
-done list：
-![2.png](/resources/2.png)
-基本操作：
-![3.gif](/resources/3.gif)
-数据导出：
-![4.gif](/resources/4.gif)
-鼠标穿透：
-![5.gif](/resources/5.gif)
+![todo list](/resources/1.png)
+
+![done list](/resources/2.png)
+
+![基本操作](/resources/3.gif)
+
+![数据导出](/resources/4.gif)
+
+![鼠标穿透](/resources/5.gif)
+
+![macOS](/resources/6.png)
 
 ## 步骤
 
