@@ -130,7 +130,7 @@ function exportData() {
   const todoList = DB.get("todoList");
 
   for (let i in todoList) {
-    sheet1.addRow([todoList[i].content, new Date(todoList[i].todo_datetime)]);
+    sheet1.addRow([todoList[i].content, todoList[i].todo_datetime]);
   }
 
   const sheet2 = workbook.addWorksheet("done list");
@@ -141,8 +141,8 @@ function exportData() {
     for (let i in doneGroupList[prop]) {
       sheet2.addRow([
         doneGroupList[prop][i].content,
-        new Date(doneGroupList[prop][i].todo_datetime),
-        new Date(doneGroupList[prop][i].done_datetime),
+        doneGroupList[prop][i].todo_datetime,
+        doneGroupList[prop][i].done_datetime,
       ]);
     }
   }

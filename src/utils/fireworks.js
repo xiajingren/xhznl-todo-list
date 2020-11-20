@@ -94,6 +94,20 @@ class Boom {
 
 class CursorSpecialEffects {
   constructor() {
+    // this.computerCanvas = document.createElement("canvas");
+    // this.renderCanvas = document.createElement("canvas");
+    // this.computerContext = this.computerCanvas.getContext("2d");
+    // this.renderContext = this.renderCanvas.getContext("2d");
+    // this.globalWidth = window.innerWidth;
+    // this.globalHeight = window.innerHeight;
+    // this.booms = [];
+    // this.running = false;
+    // this.init();
+  }
+
+  reset() {
+    if (this.renderCanvas) document.body.removeChild(this.renderCanvas);
+
     this.computerCanvas = document.createElement("canvas");
     this.renderCanvas = document.createElement("canvas");
 
@@ -110,6 +124,8 @@ class CursorSpecialEffects {
   }
 
   handleMouseDown(e) {
+    this.reset();
+
     const boom = new Boom({
       origin: { x: e.clientX, y: e.clientY },
       context: this.computerContext,

@@ -11,7 +11,7 @@
 <script>
 import { ipcRenderer } from "electron";
 import DB from "@/utils/db";
-import { getDateStr, getNowDate, getNowDateTime } from "@/utils/common";
+import { getDateStr } from "@/utils/common";
 
 export default {
   name: "Done",
@@ -24,20 +24,6 @@ export default {
     getDateStr,
     getDoneList() {
       const list = DB.groupby("doneList", "done_date");
-      if (Object.keys(list).length === 0) {
-        this.doneGroupList = {};
-        this.doneGroupList[getNowDate()] = [
-          {
-            done_date: getNowDate(),
-            done_datetime: getNowDateTime(),
-            todo_date: getNowDate(),
-            todo_datetime: getNowDateTime(),
-            content: "【重要】给爱的人一个温暖的拥抱",
-            id: "272aa857-bd53-44fb-b6fc-49d4ef595ade",
-          },
-        ];
-        return;
-      }
       this.doneGroupList = list;
     },
   },
