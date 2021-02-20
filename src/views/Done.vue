@@ -2,8 +2,23 @@
   <div class="root">
     <div class="list" v-for="(value, key) in doneGroupList" :key="key">
       <div class="group">{{ getDateStr(key) }}</div>
-      <div class="item" v-for="(done, index) in value" :key="done.id">
+      <div
+        class="item"
+        v-for="(done, index) in value"
+        :key="done.id"
+        @click.stop="editId === done.id ? (editId = '') : (editId = done.id)"
+      >
         <p>{{ index + 1 }}.{{ done.content }}</p>
+        <i
+          v-if="editId === done.id"
+          class="iconfont icon-back"
+          @click.stop="restore(done)"
+        ></i>
+        <i
+          v-if="editId === done.id"
+          class="iconfont icon-close"
+          @click.stop="remove(done)"
+        ></i>
       </div>
     </div>
   </div>
@@ -18,6 +33,7 @@ export default {
   data() {
     return {
       doneGroupList: null,
+      editId: "",
     };
   },
   methods: {
@@ -25,6 +41,22 @@ export default {
     getDoneList() {
       const list = DB.groupby("doneList", "done_date");
       this.doneGroupList = list;
+    },
+    restore(done) {
+      DB.insert("todoList", {
+        todo_date: done.todo_date,
+        todo_datetime: done.todo_datetime,
+        content: done.content,
+      });
+
+      DB.removeById("doneList", done.id);
+
+      this.getDoneList();
+    },
+    remove(done) {
+      DB.removeById("doneList", done.id);
+
+      this.getDoneList();
     },
   },
   created() {
@@ -57,6 +89,7 @@ export default {
       user-select: none;
     }
     .item {
+      display: flex;
       height: 28px;
       p {
         width: 100%;
@@ -65,6 +98,12 @@ export default {
         text-overflow: ellipsis;
         overflow: hidden;
         line-height: 28px;
+        cursor: pointer;
+      }
+      i {
+        line-height: 28px;
+        padding: 0 5px;
+        cursor: pointer;
       }
     }
     .item:hover {
