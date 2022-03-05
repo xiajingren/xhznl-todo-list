@@ -38,7 +38,12 @@ export function initExtra() {
 }
 
 export function createTray(setPosition) {
-  tray = new Tray(path.join(__static, "./tary.png"));
+  tray = new Tray(
+    path.join(
+      __static,
+      process.platform !== "darwin" ? "./tray.png" : "./tray-mac.png"
+    )
+  );
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -87,6 +92,26 @@ export function createTray(setPosition) {
   tray.on("click", (event, bounds, position) => {
     setPosition();
   });
+}
+
+export function createAppMenu() {
+  const template = [
+    // { role: 'appMenu' }
+    ...(process.platform === "darwin"
+      ? [
+          {
+            label: app.name,
+            submenu: [
+              { role: "about", label: "关于" },
+              { type: "separator" },
+              { role: "quit", label: "退出" },
+            ],
+          },
+        ]
+      : []),
+  ];
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 }
 
 function setOpenAtLogin(openAtLogin) {

@@ -5,7 +5,7 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 //import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-import { initExtra, createTray } from "@/utils/backgroundExtra";
+import { initExtra, createTray, createAppMenu } from "@/utils/backgroundExtra";
 
 import { autoUpdater } from "electron-updater";
 
@@ -27,6 +27,8 @@ if (app.requestSingleInstanceLock()) {
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
+
+createAppMenu();
 
 async function createWindow() {
   // Create the browser window.
@@ -129,6 +131,7 @@ function init() {
   createWindow();
   initExtra();
   createTray(showWindow);
+  //createAppMenu();
 }
 
 // Exit cleanly on request from parent process in development mode.
