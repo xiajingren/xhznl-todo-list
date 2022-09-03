@@ -172,7 +172,8 @@ function setPosition() {
 }
 
 function showWindow() {
-  if (!win.isVisible()) win.show();
+  //if (!win.isVisible())
+  win.show();
 }
 
 ipcMain.handle("setIgnoreMouseEvents", (event, ignore) => {

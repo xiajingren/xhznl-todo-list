@@ -5,7 +5,7 @@ import {
   Menu,
   shell,
   dialog,
-  Notification,
+  Notification
 } from "electron";
 import DB from "./db";
 import path from "path";
@@ -22,7 +22,7 @@ export function getDataPath() {
   return app.getPath("userData");
 }
 
-ipcMain.handle("getDataPath", (event) => {
+ipcMain.handle("getDataPath", event => {
   return getDataPath();
 });
 
@@ -37,7 +37,7 @@ export function initExtra() {
   }
 }
 
-export function createTray(setPosition) {
+export function createTray(showWindow) {
   tray = new Tray(
     path.join(
       __static,
@@ -53,13 +53,13 @@ export function createTray(setPosition) {
       click() {
         const openAtLogin = getOpenAtLogin();
         setOpenAtLogin(!openAtLogin);
-      },
+      }
     },
     {
       label: "项目地址",
       click: () => {
         shell.openExternal("https://github.com/xiajingren/xhznl-todo-list");
-      },
+      }
     },
     {
       label: "问题反馈",
@@ -67,7 +67,7 @@ export function createTray(setPosition) {
         shell.openExternal(
           "https://github.com/xiajingren/xhznl-todo-list/issues"
         );
-      },
+      }
     },
     {
       label: "关于",
@@ -76,21 +76,21 @@ export function createTray(setPosition) {
         dialog.showMessageBox({
           title: pkg.name,
           message: pkg.description,
-          detail: `Version: ${pkg.version}\nAuthor: ${pkg.author}\nGithub: https://github.com/xiajingren/xhznl-todo-list`,
+          detail: `Version: ${pkg.version}\nAuthor: ${pkg.author}\nGithub: https://github.com/xiajingren/xhznl-todo-list`
         });
-      },
+      }
     },
     {
       label: "退出",
-      role: "quit",
-    },
+      role: "quit"
+    }
   ]);
   tray.setContextMenu(contextMenu);
 
   tray.setToolTip(pkg.name);
 
   tray.on("click", (event, bounds, position) => {
-    setPosition();
+    showWindow();
   });
 }
 
@@ -104,11 +104,11 @@ export function createAppMenu() {
             submenu: [
               { role: "about", label: "关于" },
               { type: "separator" },
-              { role: "quit", label: "退出" },
-            ],
-          },
+              { role: "quit", label: "退出" }
+            ]
+          }
         ]
-      : []),
+      : [])
   ];
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
@@ -117,14 +117,14 @@ export function createAppMenu() {
 function setOpenAtLogin(openAtLogin) {
   if (app.isPackaged) {
     app.setLoginItemSettings({
-      openAtLogin: openAtLogin,
+      openAtLogin: openAtLogin
     });
   } else {
     app.setLoginItemSettings({
       openAtLogin: openAtLogin,
       openAsHidden: false,
       path: process.execPath,
-      args: [path.resolve(process.argv[1])],
+      args: [path.resolve(process.argv[1])]
     });
   }
 }
@@ -136,13 +136,13 @@ function getOpenAtLogin() {
   } else {
     const { openAtLogin } = app.getLoginItemSettings({
       path: process.execPath,
-      args: [path.resolve(process.argv[1])],
+      args: [path.resolve(process.argv[1])]
     });
     return openAtLogin;
   }
 }
 
-ipcMain.handle("exportData", (event) => {
+ipcMain.handle("exportData", event => {
   exportData();
 });
 
@@ -167,7 +167,7 @@ function exportData() {
       sheet2.addRow([
         doneGroupList[prop][i].content,
         doneGroupList[prop][i].todo_datetime,
-        doneGroupList[prop][i].done_datetime,
+        doneGroupList[prop][i].done_datetime
       ]);
     }
   }
@@ -176,7 +176,7 @@ function exportData() {
 
   dialog
     .showSaveDialog({ title: "数据导出", defaultPath: defaultPath })
-    .then(async (result) => {
+    .then(async result => {
       if (result.canceled) return;
 
       await workbook.xlsx.writeFile(result.filePath);
